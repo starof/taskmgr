@@ -5,6 +5,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     SharedModule,
     BrowserAnimationsModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent
