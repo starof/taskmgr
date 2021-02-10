@@ -29,7 +29,7 @@ export class CoreModule {
   ds: DomSanitizer
   ) {
     if (parent) {
-      throw new Error('模块以及存在，不能再次价值！');
+      throw new Error('模块已经存在，不能再次导入！');
     }
     loadSvgResources(ir, ds)
   }
