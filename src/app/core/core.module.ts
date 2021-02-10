@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
@@ -10,7 +11,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   declarations: [HeaderComponent, FooterComponent, SidebarComponent],
   imports: [
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent
