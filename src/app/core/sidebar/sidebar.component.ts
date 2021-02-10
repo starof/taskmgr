@@ -12,7 +12,7 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.today=`day${getDate(new Date())}`; //today对应icon的名字
+    this.today=`day${getDate(new Date())}`; //today对应icon的名字 getDate()得到，几号，一个月的第几天
   }
 
   onNavClick(){
