@@ -6,6 +6,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { loadSvgResources } from '../utils/svg.util';
 
 
 @NgModule({
@@ -21,10 +24,14 @@ import { HttpClientModule } from '@angular/common/http';
   ]
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parent: CoreModule) {
+  constructor(@Optional() @SkipSelf() parent: CoreModule,
+  ir: MatIconRegistry,
+  ds: DomSanitizer
+  ) {
     if (parent) {
       throw new Error('模块以及存在，不能再次价值！');
     }
+    loadSvgResources(ir, ds)
   }
 
 }
