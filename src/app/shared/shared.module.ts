@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 const modules = [
   CommonModule,
@@ -19,6 +20,7 @@ const modules = [
   MatFormFieldModule,
   MatListModule,
   MatSlideToggleModule,
+  MatGridListModule
 ];
 @NgModule({
   declarations: [],

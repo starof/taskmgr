@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  public avators: string[] = [];
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    this.avators = nums.map(d => `avatars:svg-${d}`);
   }
 
 }
