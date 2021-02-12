@@ -1,1 +1,8 @@
-<p>project-list works!</p>
+<app-project-item *ngFor="let project of projects"
+    [item]="project">
+
+</app-project-item>
+
+<button md-fab type="button" (ckucj)="openNewProjectDialog()">
+    <md-icon>add</md-icon>
+</button>
