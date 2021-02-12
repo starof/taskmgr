@@ -1,5 +1,6 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA , MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-project',
@@ -8,10 +9,14 @@ import { MAT_DIALOG_DATA , MatDialogRef} from '@angular/material/dialog';
 })
 export class NewProjectComponent implements OnInit {
   title = '';
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private dialogRef: MatDialogRef<NewProjectComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<NewProjectComponent>,
+    private oc: OverlayContainer) { }
 
   ngOnInit(): void {
-    console.log(JSON.stringify(this.data))
+    console.log(JSON.stringify(this.data));
+    const themeClass = this.data.dark ? 'myapp-dark-theme' : '';
+    this.oc.getContainerElement().classList.add(themeClass);
   }
   onSave() {
     this.dialogRef.close('I received your message');
