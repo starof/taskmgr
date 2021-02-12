@@ -1,8 +1,8 @@
 <app-project-item *ngFor="let project of projects"
-    [item]="project">
+    [item]="project" class="card">
 
 </app-project-item>
 
-<button md-fab type="button" (ckucj)="openNewProjectDialog()">
-    <md-icon>add</md-icon>
+<button mat-fab type="button" class="fab-button" (ckucj)="openNewProjectDialog()">
+    <mat-icon>add</mat-icon>
 </button>
