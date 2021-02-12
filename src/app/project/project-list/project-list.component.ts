@@ -1,4 +1,6 @@
+import { NewProjectComponent } from './../new-project/new-project.component';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-list',
@@ -20,13 +22,13 @@ export class ProjectListComponent implements OnInit {
       coverImg: "assets/images/covers/1.jpg"
     }
   ];
-  constructor() { }
+  constructor(private dialog:MatDialog) { }
 
   ngOnInit(): void {
   }
 
   openNewProjectDialog(){
-    
+    this.dialog.open(NewProjectComponent)
   }
 
 }
