@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'login', loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)}
+    { path: 'login', loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule) },
+    { path: 'project', loadChildren: () => import('./project/project.module').then(mod => mod.ProjectModule) }
 ];
 
 @NgModule({

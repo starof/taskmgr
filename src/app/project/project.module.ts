@@ -5,6 +5,7 @@ import { ProjectItemComponent } from './project-item/project-item.component';
 import { NewProjectComponent } from './new-project/new-project.component';
 import { InviteComponent } from './invite/invite.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProjectRoutingModule } from './project-list/project-routing.module';
 
 
 
@@ -12,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [ProjectListComponent, ProjectItemComponent, NewProjectComponent, InviteComponent],
   imports: [
     SharedModule,
-
+    ProjectRoutingModule
   ]
 })
 export class ProjectModule { }
