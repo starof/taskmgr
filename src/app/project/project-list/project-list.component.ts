@@ -28,7 +28,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   openNewProjectDialog(){
-    this.dialog.open(NewProjectComponent)
+    this.dialog.open(NewProjectComponent,{data: 'this is my data sent'});
   }
 
 }
