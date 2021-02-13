@@ -31,5 +31,7 @@ export class InviteComponent implements OnInit {
   onSave() {
 
   }
-
+  displayUser(user: { id: string; name: string }) {
+    return user ? user.name : '';
+  }
 }
