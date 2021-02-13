@@ -1,11 +1,9 @@
 <div class="tasklists">
-    <app-task-list
-        class="list-container"
-        *ngFor="let list of lists">
+    <app-task-list class="list-container" *ngFor="let list of lists">
         <app-task-header></app-task-header>
-        <pp-task-item *For="let task of tasks">
+        <app-task-item *For="let task of tasks">
 
-        </pp-task-item>
+        </app-task-item>
     </app-task-list>
 </div>
 
