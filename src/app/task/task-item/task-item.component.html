@@ -1,4 +1,8 @@
-<mat-list-item class="container">
+<mat-list-item class="container" [ngClass]="{
+        'priority-normal':item.priority===3,
+        'priority-important':item.priority===2,
+        'priority-emergency':item.priority===1
+    }">
     <mat-checkbox class="status" [checked]="item.completed"></mat-checkbox>
     <div mat-line class="content" [ngClass]="{'completed': item.completed}">{{item.desc}}</div>
     <div mat-line class="bottom-bar">
