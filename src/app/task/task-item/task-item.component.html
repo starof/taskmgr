@@ -3,9 +3,11 @@
         'priority-important':item.priority===2,
         'priority-emergency':item.priority===1
     }">
-    <mat-checkbox class="status" [checked]="item.completed"></mat-checkbox>
-    <div mat-line class="content" [ngClass]="{'completed': item.completed}">{{item.desc}}</div>
-    <div mat-line class="bottom-bar">
+    <mat-checkbox [checked]="item.completed" class="status"></mat-checkbox>
+    <div class="content" mat-line [ngClass]="{'completed': item.completed}">
+        <span [matTooltip]="item.desc">{{item.desc}}</span>
+    </div>
+    <div class="bottom-bar" mat-line>
         <span class="duedate" *ngIf="item.dueDate">
             {{item.dueDate | date: "yy-MM-dd"}}
         </span>
