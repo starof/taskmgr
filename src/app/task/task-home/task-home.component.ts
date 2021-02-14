@@ -29,6 +29,15 @@ export class TaskHomeComponent implements OnInit {
     })
   }
 
+  launchUpdateTaskDialog(task: any) {
+    const dialogRef = this.dialog.open(NewTaskComponent, {
+      data: {
+        title: '修改任务',
+        task
+      }
+    })
+  }
+
   lists = [
     {
       id: 1,
