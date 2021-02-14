@@ -39,7 +39,7 @@ const modules = [
   MatDatepickerModule,
   MatRadioModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
 ];
 @NgModule({
   declarations: [ConfirmDialogComponent],
