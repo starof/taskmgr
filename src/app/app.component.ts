@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 
@@ -8,10 +8,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('square', [
-      state('green', style({ 'background-color': 'green','height':'100px','transform':'translateY(-100%)'  })),
-      state('red', style({ 'background-color': 'red','height':'100px' ,'transform':'translateY(100%)'})),
+      state('green', style({ 'background-color': 'green', 'height': '100px', 'transform': 'translateY(-100%)' })),
+      state('red', style({ 'background-color': 'red', 'height': '100px', 'transform': 'translateY(100%)' })),
       transition('green=>red', animate('.8s ease-in')),
-      transition('red=>green', animate('.8s ease-out')),
+      transition('red=>green', animate(5000, keyframes([
+        style({ transform: 'translateY(100%)' }),
+        style({ transform: 'translateY(98%)' }),
+        style({ transform: 'translateY(95%)' }),
+        style({ transform: 'translateY(90%)' }),
+        style({ transform: 'translateY(80%)' }),
+        style({ transform: 'translateY(60%)' }),
+        style({ transform: 'translateY(30%)' }),
+        style({ transform: 'translateY(0)' }),
+        style({ transform: 'translateY(-10%)' }),
+        style({ transform: 'translateY(-5%)' }),
+        style({ transform: 'translateY(-2%)' }),
+        style({ transform: 'translateY(0)' }),
+        style({ transform: 'translateY(10%)' }),
+        style({ transform: 'translateY(15%)' }),
+        style({ transform: 'translateY(-15%)' }),
+        style({ transform: 'translateY(-40%)' }),
+        style({ transform: 'translateY(-80%)' }),
+        style({ transform: 'translateY(-90%)' }),
+        style({ transform: 'translateY(-95%)' })
+      ])))
     ])
   ]
 })
