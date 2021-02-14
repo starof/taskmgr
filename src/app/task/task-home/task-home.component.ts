@@ -2,6 +2,7 @@ import { CopyTaskComponent } from './../copy-task/copy-task.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewTaskComponent } from '../new-task/new-task.component';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-task-home',
@@ -41,6 +42,16 @@ export class TaskHomeComponent implements OnInit {
         task
       }
     })
+  }
+
+  launchConfirmDialog() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: '删除任务列表',
+        content: '您确定想删除该任务列表吗？'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => console.log(result));
   }
 
   lists = [

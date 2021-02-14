@@ -9,6 +9,7 @@ export class TaskHeaderComponent implements OnInit {
   @Input() header: string = '';
   @Output() newTask = new EventEmitter<void>();
   @Output() moveAll = new EventEmitter<void>();
+  @Output() deleteList = new EventEmitter<void>();
 
   constructor() { }
 
@@ -19,5 +20,8 @@ export class TaskHeaderComponent implements OnInit {
   }
   OnCopyTaskClick() {
     this.moveAll.emit();
+  }
+  OnDeleteListClick(){
+    this.deleteList.emit();
   }
 }
