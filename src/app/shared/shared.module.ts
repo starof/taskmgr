@@ -14,6 +14,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const modules = [
   CommonModule,
@@ -31,6 +33,8 @@ const modules = [
   MatMenuModule,
   MatCheckboxModule,
   MatTooltipModule,
+  MatDatepickerModule,
+  MatRadioModule,
 ];
 @NgModule({
   declarations: [],
