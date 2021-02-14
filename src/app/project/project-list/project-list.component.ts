@@ -29,7 +29,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   openNewProjectDialog() {
-    const dialogRef = this.dialog.open(NewProjectComponent, { data: { dark: true } });
+    const dialogRef = this.dialog.open(NewProjectComponent, { data: { title: '新建项目' } });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result)
     });
@@ -37,6 +37,14 @@ export class ProjectListComponent implements OnInit {
 
   launchInviteDialog() {
     const dialogRef = this.dialog.open(InviteComponent);
+  }
+  launchEditDialog(project: any) {
+    const dialogRef = this.dialog.open(NewProjectComponent, {
+      data: {
+        title: '修改项目',
+        project
+      }
+    })
   }
 
 }
