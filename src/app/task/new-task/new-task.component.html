@@ -12,9 +12,13 @@
             <input type="text" [matDatepicker]="dueDatepicker" matInput placeholder="任务截止日期" style="text-align: right">
             <button type="button" matSuffix [matDatepickerToggle]="dueDatepicker"></button>
         </mat-form-field>
-
         <mat-datepicker #dueDatepicker>
-
+        </mat-datepicker>
+        <mat-form-field class="full-width">
+            <input type="text" [matDatepicker]="reminderDatepicker" matInput placeholder="提醒日期" style="text-align: right">
+            <button type="button" matSuffix [matDatepickerToggle]="reminderDatepicker"></button>
+        </mat-form-field>
+        <mat-datepicker #reminderDatepicker>
         </mat-datepicker>
     </div>
     <div mat-dialog-actions>
