@@ -10,13 +10,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class NewProjectComponent implements OnInit {
   title = '';
   constructor(@Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<NewProjectComponent>,
-    private oc: OverlayContainer) { }
+    private dialogRef: MatDialogRef<NewProjectComponent>) { }
 
   ngOnInit(): void {
     console.log(JSON.stringify(this.data));
-    const themeClass = this.data.dark ? 'myapp-dark-theme' : '';
-    this.oc.getContainerElement().classList.add(themeClass);
   }
   onSave() {
     this.dialogRef.close('I received your message');
