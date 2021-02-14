@@ -8,6 +8,14 @@
             <mat-raido-button *ngFor="let priority of priorities" [value]="priority.value">{{priority.label}}
             </mat-raido-button>
         </mat-raio-group>
+        <mat-form-field class="full-width">
+            <input type="text" [matDatepicker]="dueDatepicker" matInput placeholder="任务截止日期" style="text-align: right">
+            <button type="button" matSuffix [matDatepickerToggle]="dueDatepicker"></button>
+        </mat-form-field>
+
+        <mat-datepicker #dueDatepicker>
+
+        </mat-datepicker>
     </div>
     <div mat-dialog-actions>
         <button type="button" mat-raised-button color="primary" (click)="onSave()">保存</button>
