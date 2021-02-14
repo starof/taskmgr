@@ -1,1 +1,16 @@
-<p>new-task works!</p>
+<form>
+    <h2 mat-dialog-title>新建任务</h2>
+    <div mat-dialog-content>
+        <mat-form-field class="example-full-width" class="full-width">
+            <input type="text" matInput placeholder="任务内容" style="text-align: right">
+        </mat-form-field>
+        <mat-raio-group>
+            <mat-raido-button *ngFor="let priority of priorities" [value]="priority.value">{{priority.label}}
+            </mat-raido-button>
+        </mat-raio-group>
+    </div>
+    <div mat-dialog-actions>
+        <button type="button" mat-raised-button color="primary" (click)="onSave()">保存</button>
+        <button type="button" mat-button mat-dialog-close>关闭</button>
+    </div>
+</form>
