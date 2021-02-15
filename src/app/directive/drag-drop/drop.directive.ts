@@ -1,10 +1,9 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appDrop]'
+  selector: '[app-droppable][draggedClass]'
 })
 export class DropDirective {
-
-  constructor() { }
-
+  
+  
 }
