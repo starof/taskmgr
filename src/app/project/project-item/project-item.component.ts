@@ -1,12 +1,13 @@
 import { cardAnim } from './../../animate/card.animate';
-import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
   selector: 'app-project-item',
   templateUrl: './project-item.component.html',
   styleUrls: ['./project-item.component.scss'],
-  animations: [cardAnim] // <-- Don't forget!
+  animations: [cardAnim], // <-- Don't forget!
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectItemComponent implements OnInit {
   @HostBinding('@card') cardState = 'out';
