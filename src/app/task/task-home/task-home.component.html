@@ -3,6 +3,10 @@
         app-droppable="true" 
         [dragEnterClass]=" 'drag-enter' "
         [dropTags]="['task-item','task-list']"
+        [app-draggable]="true"
+        [dragTag]="'task-list'"
+        [draggedClass]="'drag-start'"
+        [dragData]="list"
         (dropped)="handleMove($event,list)"
         class="list-container"
         *ngFor="let list of lists">
