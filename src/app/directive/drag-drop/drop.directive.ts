@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Directive({
-  selector: '[app-droppable][dragEnterClass]'
+  selector: '[app-droppable][dropTags][dragEnterClass]'
 })
 export class DropDirective {
   @Output()
@@ -34,6 +34,9 @@ export class DropDirective {
 
   @HostListener('dragover', ['$event'])
   onDragOver(event: Event) {
+    //需要支持多级拖拽，所以要防止事件冒泡
+    event.preventDefault();
+    event.stopPropagation();
     //判断drag元素是不是指令应用的元素发起的
     if (this.el.nativeElement === event.target) {
       this.data$.subscribe(dragData => {
@@ -50,6 +53,8 @@ export class DropDirective {
 
   @HostListener('dragleave', ['$event'])
   onDragLeave(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.el.nativeElement === event.target) {
       this.data$.subscribe(dragData => {
         if (dragData && this.dropTags.indexOf(dragData.tag) > -1) {
@@ -61,6 +66,8 @@ export class DropDirective {
 
   @HostListener('drop', ['$event'])
   onDrop(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     //判断drag元素是不是指令应用的元素发起的
     if (this.el.nativeElement === event.target) {
       this.data$.subscribe(dragData => {

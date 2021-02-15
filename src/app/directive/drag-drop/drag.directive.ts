@@ -2,7 +2,7 @@ import { DragDropService } from './../drag-drop.service';
 import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[app-draggable][draggedClass]'
+  selector: '[app-draggable][dragTag][dragData][draggedClass]'
 })
 export class DragDirective {
   private _isDraggable = false;

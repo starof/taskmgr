@@ -1,3 +1,4 @@
+import { DragData } from './../../directive/drag-drop.service';
 import { slideToRight } from './../../animate/router.animate';
 import { CopyTaskComponent } from './../copy-task/copy-task.component';
 import { ChangeDetectionStrategy, Component, HostBinding, OnInit } from '@angular/core';
@@ -73,6 +74,19 @@ export class TaskHomeComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => console.log(result));
+  }
+
+  handleMove(srcData: DragData, list: any) {
+    switch (srcData.tag) {
+      case 'task-item':
+        console.log('handling item');
+        break;
+      case 'task-list':
+        console.log('handling list');
+        break;
+      default:
+        break;
+    }
   }
 
   lists = [
