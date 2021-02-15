@@ -20,7 +20,7 @@ export class DragDropService {
   }
 
   getDragData() {
-    this._dragData.asObservable();
+    return this._dragData.asObservable();
   }
 
   clearDragData() {

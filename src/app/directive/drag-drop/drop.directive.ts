@@ -1,19 +1,34 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import { DragDropService, DragData } from './../drag-drop.service';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Directive({
   selector: '[app-droppable][dragEnterClass]'
 })
 export class DropDirective {
+  @Output()
+  dropped = new EventEmitter<DragData>();
+
   @Input()
   dragEnterClass: string = '';
-  constructor(private el: ElementRef, private renderer: Renderer2) {
+
+  @Input()
+  dropTags: string[] = [];
+  private data$: Observable<DragData | null>;
+  constructor(private el: ElementRef, private renderer: Renderer2, private service: DragDropService) {
+    this.data$ = this.service.getDragData().pipe(take(1));
 
   }
 
   @HostListener('dragenter', ['$event'])
   onDragEnter(event: Event) {
     if (this.el.nativeElement === event.target) {
-      this.renderer.addClass(this.el.nativeElement, this.dragEnterClass)
+      this.data$.subscribe(dragData => {
+        if (dragData && this.dropTags.includes(dragData.tag)) {
+          this.renderer.addClass(this.el.nativeElement, this.dragEnterClass);
+        }
+      })
     }
   }
 
@@ -21,14 +36,26 @@ export class DropDirective {
   onDragOver(event: Event) {
     //判断drag元素是不是指令应用的元素发起的
     if (this.el.nativeElement === event.target) {
-
+      this.data$.subscribe(dragData => {
+        if (dragData && this.dropTags.indexOf(dragData.tag) > -1) {
+          this.renderer.setProperty(event, 'dataTransfer.effectAllowed', 'all');
+          this.renderer.setProperty(event, 'dataTransfer.dropEffect', 'none');
+        } else {
+          this.renderer.setProperty(event, 'dataTransfer.effectAllowed', 'none');
+          this.renderer.setProperty(event, 'dataTransfer.dropEffect', 'none');
+        }
+      });
     }
   }
 
   @HostListener('dragleave', ['$event'])
   onDragLeave(event: Event) {
     if (this.el.nativeElement === event.target) {
-      this.renderer.removeClass(this.el.nativeElement, this.dragEnterClass);
+      this.data$.subscribe(dragData => {
+        if (dragData && this.dropTags.indexOf(dragData.tag) > -1) {
+          this.renderer.removeClass(this.el.nativeElement, this.dragEnterClass);
+        }
+      });
     }
   }
 
@@ -36,7 +63,13 @@ export class DropDirective {
   onDrop(event: Event) {
     //判断drag元素是不是指令应用的元素发起的
     if (this.el.nativeElement === event.target) {
-      this.renderer.removeClass(this.el.nativeElement, this.dragEnterClass);
+      this.data$.subscribe(dragData => {
+        if (dragData && this.dropTags.indexOf(dragData.tag) > -1) {
+          this.renderer.removeClass(this.el.nativeElement, this.dragEnterClass);
+          this.dropped.emit(dragData);
+          this.service.clearDragData();
+        }
+      });
     }
   }
 
