@@ -18,6 +18,10 @@
         <span class="duedate" *ngIf="item.dueDate">
             {{item.dueDate | date: "yy-MM-dd"}}
         </span>
+        <!-- <ng-template [ngIf]="item.reminder">
+            <mat-icon class="alarm">alarm</mat-icon>
+        </ng-template> -->
+        
         <mat-icon *ngIf="item.reminder" class="alarm">alarm</mat-icon>
     </div>
     <mat-icon [svgIcon]="avatar" class="avatar" md-list-avatar></mat-icon>
