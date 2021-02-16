@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { loadSvgResources } from '../utils/svg.util';
+import { ServicesModule } from '../services/services.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { loadSvgResources } from '../utils/svg.util';
     SharedModule,
     BrowserAnimationsModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    ServicesModule.forRoot()
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent
@@ -25,8 +27,8 @@ import { loadSvgResources } from '../utils/svg.util';
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parent: CoreModule,
-  ir: MatIconRegistry,
-  ds: DomSanitizer
+    ir: MatIconRegistry,
+    ds: DomSanitizer
   ) {
     if (parent) {
       throw new Error('模块已经存在，不能再次导入！');
