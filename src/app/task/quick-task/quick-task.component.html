@@ -1,0 +1,20 @@
+<form #f=ngForm>
+    <div mat-dialog-content>
+        <mat-form-field class="full-width">
+            <input [(ngModel)]="desc" required type="text" matInput placeholder="在这里快速简历一个任务" style="text-align: right"
+                name="desc">
+            <button matSuffix mat-icon-button type="button">
+                <mat-icon>send</mat-icon>
+            </button>
+            <mat-error>不能为空</mat-error>
+        </mat-form-field>
+    </div>
+</form>
+
+<div>
+    表单数据：{{f.value | json}}
+</div>
+
+<div>
+    表单验证状态：{{ f.valid | json }}
+</div>

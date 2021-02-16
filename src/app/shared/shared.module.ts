@@ -20,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const modules = [
   CommonModule,
@@ -41,7 +42,9 @@ const modules = [
   MatRadioModule,
   MatNativeDateModule,
   MatSelectModule,
-  DirectiveModule
+  DirectiveModule,
+  FormsModule,
+  ReactiveFormsModule
 ];
 @NgModule({
   declarations: [ConfirmDialogComponent],
