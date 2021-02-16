@@ -1,9 +1,9 @@
-<form #f=ngForm>
+<form #f=ngForm (ngSubmit)="onSubmit(f,$event)">
     <div mat-dialog-content>
         <mat-form-field class="full-width">
             <input [(ngModel)]="desc" required type="text" matInput placeholder="在这里快速简历一个任务" style="text-align: right"
                 name="desc">
-            <button matSuffix mat-icon-button type="button">
+            <button matSuffix mat-icon-button type="submit">
                 <mat-icon>send</mat-icon>
             </button>
             <mat-error>不能为空</mat-error>
