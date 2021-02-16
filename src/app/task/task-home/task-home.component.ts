@@ -83,6 +83,10 @@ export class TaskHomeComponent implements OnInit {
         break;
       case 'task-list':
         console.log('handling list');
+        const srcList = srcData.data;
+        const tempOrder = srcList.order;
+        srcList.order = list.order;
+        list.order = tempOrder;
         break;
       default:
         break;

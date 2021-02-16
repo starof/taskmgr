@@ -9,6 +9,7 @@
         [dragData]="list"
         (dropped)="handleMove($event,list)"
         class="list-container"
+        [ngStyle]="{'order':list.order}"
         *ngFor="let list of lists">
         <app-task-header [header]="list.name" (newTask)="launchNewTaskDialog()" (moveAll)="launchCopyTaskDialog()"
             (deleteList)="launchConfirmDialog()" (editList)="launchEditListDialog();">
