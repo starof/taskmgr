@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-quick-task',
@@ -8,14 +7,19 @@ import { NgForm } from '@angular/forms';
 })
 export class QuickTaskComponent implements OnInit {
   desc: string = '';
+  @Output() quickTask = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(f: NgForm, event: Event) {
-    console.log(f)
-    console.log(JSON.stringify(f.value));
-    console.log(JSON.stringify(f.valid))
+
+  @HostListener('keyup.enter')
+  sendQuickTask() {
+    if (!this.desc || this.desc.length === 0 || !this.desc.trim()) {
+      return;
+    }
+    this.quickTask.emit(this.desc);
+    this.desc = '';
   }
 }
