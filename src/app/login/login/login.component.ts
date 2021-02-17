@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +8,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  constructor() {
-    this.form = new FormGroup({
-      email: new FormControl("wang@163.com", Validators.compose([Validators.required, Validators.email])),
-      password: new FormControl("",Validators.required),
+  constructor(private fb: FormBuilder) {
+    // this.form = new FormGroup({
+    //   email: new FormControl("wang@163.com", Validators.compose([Validators.required, Validators.email])),
+    //   password: new FormControl("",Validators.required),
+    // })
+
+    //formBuilder不需要显示的new FormControl
+    this.form = this.fb.group({
+      email: ["wang@163.com", Validators.compose([Validators.required, Validators.email]) ],
+      password:["",Validators.required]
+
     })
   }
 
