@@ -1,16 +1,16 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form,$event)">
     <mat-card class="example-card">
         <mat-card-header>
             <mat-card-title>登录:</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <mat-form-field class="example-full-width" class="full-width">
-                <input type="text" matInput placeholder="您的email" style="text-align: right">
+                <input type="text" formControlName="email" matInput placeholder="您的email" style="text-align: right">
             </mat-form-field>
             <mat-form-field class="example-full-width" class="full-width">
-                <input type="password" matInput placeholder="您的密码" style="text-align: right">
+                <input type="password" formControlName="password"  matInput placeholder="您的密码" style="text-align: right">
             </mat-form-field>
-            <button mat-raised-button type="button" color="primary">登录</button>
+            <button mat-raised-button type="submit" color="primary">登录</button>
 
         </mat-card-content>
         <mat-card-actions class="text-right">
