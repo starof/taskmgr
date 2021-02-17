@@ -6,6 +6,7 @@
         <mat-card-content>
             <mat-form-field class="example-full-width" class="full-width">
                 <input type="text" formControlName="email" matInput placeholder="您的email" style="text-align: right">
+                <mat-error>{{form.controls['email'].errors | json}}</mat-error>
             </mat-form-field>
             <mat-form-field class="example-full-width" class="full-width">
                 <input type="password" formControlName="password"  matInput placeholder="您的密码" style="text-align: right">

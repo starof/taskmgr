@@ -16,20 +16,34 @@ export class LoginComponent implements OnInit {
 
     //formBuilder不需要显示的new FormControl
     this.form = this.fb.group({
-      email: ["wang@163.com", Validators.compose([Validators.required, Validators.email]) ],
+      email: ["wang@163.com", Validators.compose([Validators.required, Validators.email, this.validate]) ],
       password:["",Validators.required]
 
     })
   }
 
   ngOnInit(): void {
-
+   
   }
 
   onSubmit(form: FormGroup, event: Event) {
     event.preventDefault();
     console.log(JSON.stringify(form.value));
     console.log(form.valid);
+  }
+
+  validate(c:FormControl):{[key:string]:any} | null{
+    if(!c.value){
+      return null;
+    }
+    const pattern=/^wang+/;
+    if(pattern.test(c.value)){
+      return null;
+    }else{
+      return {
+        emailNotValid: 'The email must start with wang'
+      }
+    }
   }
 
 }
