@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 
 const modules = [
   CommonModule,
@@ -47,7 +48,7 @@ const modules = [
   ReactiveFormsModule
 ];
 @NgModule({
-  declarations: [ConfirmDialogComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent],
   imports: modules,
   exports: modules
 })
