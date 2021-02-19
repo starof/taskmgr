@@ -40,7 +40,6 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   }
   //什么状态算touched，告诉表单
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
   }
 
   onChange(i: number) {

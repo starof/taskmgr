@@ -1,27 +1,29 @@
-<form>
+<form [formGroup]="form" (ngSubmit)=onSubmit(form,$event)>
     <mat-card class="example-card">
       <mat-card-header>
         <mat-card-title>注册:</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
-          <input type="text" matInput placeholder="您的姓名" style="text-align: right">
+          <input type="text" matInput placeholder="您的姓名" formControlName="name" style="text-align: right">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input type="text" matInput placeholder="您的email" style="text-align: right">
+          <input type="text" matInput placeholder="您的email" formControlName="email" style="text-align: right">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input type="password" matInput placeholder="您的密码" style="text-align: right">
+          <input type="password" matInput placeholder="您的密码" formControlName="password" style="text-align: right">
         </mat-form-field>
         <mat-form-field class="full-width">
-          <input type="password" matInput placeholder="重复输入您的密码" style="text-align: right">
+          <input type="password" matInput placeholder="重复输入您的密码" formControlName="repeat" style="text-align: right">
         </mat-form-field>
-        <mat-grid-list cols="6">
-          <mat-grid-tile *ngFor="let avator of avators">
-            <mat-icon class="avatar" [svgIcon]="avator"></mat-icon>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <button mat-raised-button type="button" color="primary">注册</button>
+        <app-image-list-select
+          [useSvgIcon]="true"
+          [cols]="6"
+          [title]="'选择头像:'"
+          [items]="items"
+          formControlName="avatar">
+        </app-image-list-select>
+        <button mat-raised-button type="submit" color="primary">注册</button>
   
       </mat-card-content>
       <mat-card-actions class="text-right">
