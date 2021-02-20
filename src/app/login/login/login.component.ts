@@ -10,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  quote: Quote = { cn: '', pic: '', en: '' };
+  quote: Quote = { cn: '满足感在于不断的努力，而不是现有成就。全心努力定会胜利满满。', pic: '/assets/images/quote_fallback.jpg', en: 'Satisfaction lies in the effort, not in the attainment. Full effort is full victory.' };
   constructor(private fb: FormBuilder, private quoteService$: QuoteService) {
     // this.form = new FormGroup({
     //   email: new FormControl("wang@163.com", Validators.compose([Validators.required, Validators.email])),
