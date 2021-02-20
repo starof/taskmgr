@@ -23,6 +23,13 @@ import { ServicesModule } from '../services/services.module';
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent
+  ],
+  providers: [
+    {
+      provide: 'BASE_CONFIG', useValue: {
+        uri: 'http://localhost:3000'
+      }
+    }
   ]
 })
 export class CoreModule {

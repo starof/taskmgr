@@ -1,3 +1,5 @@
+import { Quote } from './../../domain/quote.model';
+import { QuoteService } from './../../services/quote.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -8,7 +10,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  constructor(private fb: FormBuilder) {
+  quote: Quote = { cn: '', pic: '', en: '' };
+  constructor(private fb: FormBuilder, private quoteService$: QuoteService) {
     // this.form = new FormGroup({
     //   email: new FormControl("wang@163.com", Validators.compose([Validators.required, Validators.email])),
     //   password: new FormControl("",Validators.required),
@@ -16,14 +19,15 @@ export class LoginComponent implements OnInit {
 
     //formBuilder不需要显示的new FormControl
     this.form = this.fb.group({
-      email: ["wang@163.com", Validators.compose([Validators.required, Validators.email, this.validate]) ],
-      password:["",Validators.required]
+      email: ["wang@163.com", Validators.compose([Validators.required, Validators.email, this.validate])],
+      password: ["", Validators.required]
 
-    })
+    });
+    this.quoteService$.getQuote().subscribe(quote => this.quote = quote)
   }
 
   ngOnInit(): void {
-   
+
   }
 
   onSubmit(form: FormGroup, event: Event) {
@@ -32,14 +36,14 @@ export class LoginComponent implements OnInit {
     console.log(form.valid);
   }
 
-  validate(c:FormControl):{[key:string]:any} | null{
-    if(!c.value){
+  validate(c: FormControl): { [key: string]: any } | null {
+    if (!c.value) {
       return null;
     }
-    const pattern=/^wang+/;
-    if(pattern.test(c.value)){
+    const pattern = /^wang+/;
+    if (pattern.test(c.value)) {
       return null;
-    }else{
+    } else {
       return {
         emailNotValid: 'The email must start with wang'
       }
