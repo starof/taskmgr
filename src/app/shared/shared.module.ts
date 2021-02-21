@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
+import { AgeInputComponent } from './age-input/age-input.component';
 
 const modules = [
   CommonModule,
@@ -48,7 +49,7 @@ const modules = [
   ReactiveFormsModule
 ];
 @NgModule({
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent],
   imports: modules,
   exports: [...modules, ImageListSelectComponent]
 })
