@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
       name: [],
       password: [],
       repeat: [],
-      avatar: [img]
+      avatar: [img],
+      dateOfBirth: []
     })
   }
 
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
     if (!valid) {
       return;
     }
+    console.log(value);
   }
 
 }
