@@ -53,6 +53,6 @@ const modules = [
 @NgModule({
   declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent],
   imports: modules,
-  exports: [...modules, ImageListSelectComponent]
+  exports: [...modules, ImageListSelectComponent, AgeInputComponent]
 })
 export class SharedModule { }
