@@ -1,8 +1,8 @@
 import { Project } from './../domain';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { count, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +38,15 @@ export class ProjectService {
 
   //DELETE
   delete(project: Project): Observable<Project> {
-    project.id = undefined;
-    const uri = `${this.config.uri}/${this.domain}`;
-    return this.httpClient.post(uri, JSON.stringify(project)).pipe(
-      map(res => res as Project)
+    const delTasks$ = from(project.taskLists ? project.taskLists : []).pipe(
+      mergeMap(listId => this.httpClient.delete(`${this.config.uri}/taskLists/${listId}`)),
+      count()
+    );
+    const uri = `${this.config.uri}/${this.domain}/${project.id}`;
+    return delTasks$.pipe(
+      switchMap(_ => this.httpClient.delete(uri).pipe(
+        mapTo(project)
+      ))
     )
   }
 
