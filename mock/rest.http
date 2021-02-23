@@ -1,1 +1,38 @@
 GET http://localhost:3000/projects?members_lick="2"
+
+###
+GET http://localhost:3000/tasklists
+
+###
+POST http://localhost:3000/tasklists
+Content-Type: application/json
+
+{
+    "name": "Copy已完成",
+    "order": 4,
+    "projectId": "Sk2HaTagb"
+}
+
+
+###
+PUT http://localhost:3000/tasklists/CKUq_t9
+Content-Type: application/json
+
+{
+    "name": "Copy已完成2",
+    "order": 4,
+    "projectId": "Sk2HaTagb"
+}
+
+###
+PATCH  http://localhost:3000/tasklists/CKUq_t9
+Content-Type: application/json
+
+{
+    "name": "Copy已完成Patch",
+    "order": 4,
+    "projectId": "Sk2HaTagb"
+}
+
+###
+DELETE http://localhost:3000/tasklists/CKUq_t9
