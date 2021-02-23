@@ -8,7 +8,7 @@ import { concat, from, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskListService {
-  private readonly domain = 'TaskLists';
+  private readonly domain = 'taskLists';
   private headers = new HttpHeaders({
     'Content-type': 'application/json'
   });
