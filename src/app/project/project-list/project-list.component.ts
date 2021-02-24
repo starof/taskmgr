@@ -24,7 +24,6 @@ export class ProjectListComponent implements OnInit {
     this.projectService.get("37489e0c-df34-c261-71c4-ce75357e3035").subscribe(
       projects => {
         this.projects = projects;
-        console.log(this.projects)
         this.cd.markForCheck();
       }
     );
@@ -44,6 +43,7 @@ export class ProjectListComponent implements OnInit {
         }
       });
     dialogRef.afterClosed().subscribe((project) => {
+      if (!project) return;
       this.projectService.add(project);
 
       this.cd.markForCheck();
