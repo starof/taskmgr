@@ -7,7 +7,7 @@ import { NewProjectComponent } from './../new-project/new-project.component';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -21,7 +21,13 @@ export class ProjectListComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private projectService: ProjectService) {
-    this.projectService.get("37489e0c-df34-c261-71c4-ce75357e3035").subscribe(projects => this.projects = projects);
+    this.projectService.get("37489e0c-df34-c261-71c4-ce75357e3035").subscribe(
+      projects => {
+        this.projects = projects;
+        console.log(this.projects)
+        this.cd.markForCheck();
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -29,16 +35,25 @@ export class ProjectListComponent implements OnInit {
   }
 
   openNewProjectDialog() {
-    const dialogRef = this.dialog.open(NewProjectComponent, { data: { title: '新建项目' } });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      this.projects = [...this.projects,
-      { id: 3, name: '一个新项目', desc: '这是一个新项目', coverImg: "assets/images/covers/3.jpg" },
-      { id: 4, name: '又一个新项目', desc: '这是又一个新项目', coverImg: "assets/images/covers/4.jpg" }];
+    const selectedImg = `/assets/images/covers/${Math.floor(Math.random() * 40)}_tn.jpg`
+    const dialogRef = this.dialog.open(NewProjectComponent,
+      {
+        data: {
+          subnails: this.getThumbnails(),
+          img: selectedImg
+        }
+      });
+    dialogRef.afterClosed().subscribe((project) => {
+      this.projectService.add(project);
+
       this.cd.markForCheck();
     });
 
   }
+  private getThumbnails() {
+    return _.range(0, 40).map(i => `/assets/images/covers/${i}_tn.jpg`);
+  }
+
 
   launchInviteDialog() {
     const dialogRef = this.dialog.open(InviteComponent);
