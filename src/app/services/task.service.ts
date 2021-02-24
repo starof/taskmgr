@@ -74,4 +74,25 @@ export class TaskService {
     ).pipe(map(res => res as Task));
   }
 
+  //移动task
+  move(taskId: string, taskListId: string): Observable<Task> {
+    const uri = `${this.config.uri}/${this.domain}/${taskId}`;
+    return this.httpClient.patch<Task>(
+      uri,
+      JSON.stringify({ taskListId: taskListId }),
+      { headers: this.headers }
+    );
+  }
+
+  //移动srcList中所有任务到target列表
+  moveAll(srcListId: string, targetListId: string): Observable<Task[]> {
+    return this.get(srcListId).pipe(
+      mergeMap((tasks: Task[]) => from(tasks)),
+      mergeMap((task: Task) => this.move(<string>task.id, targetListId)),
+      reduce((arrTasks: Task[], t: Task) => {
+        return [...arrTasks, t];
+      }, [])
+    );
+  }
+
 }
