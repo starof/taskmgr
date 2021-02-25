@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Project } from './../../domain/project.model';
 import { ProjectService } from './../../services/project.service';
 import { listAnimation } from './../../animate/list.animate';
@@ -42,10 +43,8 @@ export class ProjectListComponent implements OnInit {
           img: selectedImg
         }
       });
-    dialogRef.afterClosed().subscribe((project) => {
-      if (!project) return;
+    dialogRef.afterClosed().pipe(filter(n => n)).subscribe((project) => {
       this.projectService.add(project);
-
       this.cd.markForCheck();
     });
 
