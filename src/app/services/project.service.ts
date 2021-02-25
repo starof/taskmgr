@@ -31,7 +31,7 @@ export class ProjectService {
       desc: project.desc,
       coverImg: project.coverImg
     }
-    return this.httpClient.patch(uri, JSON.stringify(toUpdate)).pipe(
+    return this.httpClient.patch(uri, JSON.stringify(toUpdate), { headers: this.headers }).pipe(
       map(res => res as Project)
     )
   }

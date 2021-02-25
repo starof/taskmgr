@@ -1,4 +1,4 @@
-import { filter, switchMap, map } from 'rxjs/operators';
+import { filter, switchMap, map, take } from 'rxjs/operators';
 import { Project } from './../../domain/project.model';
 import { ProjectService } from './../../services/project.service';
 import { listAnimation } from './../../animate/list.animate';
@@ -46,6 +46,7 @@ export class ProjectListComponent implements OnInit {
       });
     dialogRef.afterClosed()
       .pipe(
+        take(1),
         filter(n => n),
         map(val => ({ ...val, coverImg: this.buildImgSrc(val.coverImg) })),
         switchMap(v => this.projectService.add(v)))
@@ -66,13 +67,25 @@ export class ProjectListComponent implements OnInit {
   launchInviteDialog() {
     const dialogRef = this.dialog.open(InviteComponent);
   }
-  launchEditDialog(project: any) {
-    const dialogRef = this.dialog.open(NewProjectComponent, {
-      data: {
-        title: '修改项目',
-        project
-      }
-    })
+  launchUpdateDialog(project: any) {
+    const dialogRef = this.dialog.open(NewProjectComponent,
+      {
+        data: {
+          subnails: this.getThumbnails(),
+          project
+        }
+      });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1),
+        filter(n => n),
+        map(val => ({ ...val, id: project.id, coverImg: this.buildImgSrc(val.coverImg) })),
+        switchMap(v => this.projectService.update(v)))
+      .subscribe(project => {
+        const index = this.projects.map(p => p.id).indexOf(project.id);
+        this.projects = [...this.projects.slice(0, index), project, ...this.projects.slice(index + 1)];
+        this.cd.markForCheck();
+      });
   }
   launchConfirmDialog(project: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
