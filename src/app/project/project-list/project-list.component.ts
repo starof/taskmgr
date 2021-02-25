@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { Project } from './../../domain/project.model';
 import { ProjectService } from './../../services/project.service';
 import { listAnimation } from './../../animate/list.animate';
@@ -43,11 +43,11 @@ export class ProjectListComponent implements OnInit {
           img: selectedImg
         }
       });
-    dialogRef.afterClosed().pipe(filter(n => n)).subscribe((project) => {
-      this.projectService.add(project);
-      this.cd.markForCheck();
-    });
-
+    dialogRef.afterClosed()
+      .pipe(
+        filter(n => n),
+        switchMap(v => this.projectService.add(v)))
+      .subscribe(project => console.log(project));
   }
   private getThumbnails() {
     return _.range(0, 40).map(i => `/assets/images/covers/${i}_tn.jpg`);

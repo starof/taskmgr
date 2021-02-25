@@ -1,5 +1,5 @@
 import { Project } from './../domain';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { count, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { from, Observable } from 'rxjs';
 })
 export class ProjectService {
   private readonly domain = 'projects';
-  private headers = new Headers({
+  private headers = new HttpHeaders({
     'Content-type': 'application/json'
   });
   constructor(private httpClient: HttpClient, @Inject('BASE_CONFIG') private config: any) { }
@@ -18,7 +18,7 @@ export class ProjectService {
   add(project: Project): Observable<Project> {
     project.id = undefined;
     const uri = `${this.config.uri}/${this.domain}`;
-    return this.httpClient.post(uri, JSON.stringify(project)).pipe(
+    return this.httpClient.post<Project>(uri, JSON.stringify(project), { headers: this.headers }).pipe(
       map(res => res as Project)
     )
   }
