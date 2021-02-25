@@ -1,4 +1,4 @@
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, map } from 'rxjs/operators';
 import { Project } from './../../domain/project.model';
 import { ProjectService } from './../../services/project.service';
 import { listAnimation } from './../../animate/list.animate';
@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnI
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import * as _ from 'lodash';
+import { values } from 'lodash';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -46,11 +47,19 @@ export class ProjectListComponent implements OnInit {
     dialogRef.afterClosed()
       .pipe(
         filter(n => n),
+        map(val => ({ ...val, coverImg: this.buildImgSrc(val.coverImg) })),
         switchMap(v => this.projectService.add(v)))
-      .subscribe(project => console.log(project));
+      .subscribe(project => {
+        this.projects = [...this.projects, project];
+        this.cd.markForCheck();
+      });
   }
   private getThumbnails() {
     return _.range(0, 40).map(i => `/assets/images/covers/${i}_tn.jpg`);
+  }
+
+  private buildImgSrc(img: string): string {
+    return img.indexOf('_') > -1 ? img.split('_')[0] + '.jpg' : img;
   }
 
 
