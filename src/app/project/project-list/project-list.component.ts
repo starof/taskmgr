@@ -5,11 +5,13 @@ import { listAnimation } from './../../animate/list.animate';
 import { slideToRight } from './../../animate/router.animate';
 import { InviteComponent } from './../invite/invite.component';
 import { NewProjectComponent } from './../new-project/new-project.component';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import * as _ from 'lodash';
-import { values } from 'lodash';
+import { Subscription } from 'rxjs/internal/Subscription';
+
+
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -17,23 +19,30 @@ import { values } from 'lodash';
   animations: [slideToRight, listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, OnDestroy {
   @HostBinding('@routeAnim') state: any;
   projects: Project[] = [];
+  sub: Subscription;
+
   constructor(private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private projectService: ProjectService) {
-    this.projectService.get("37489e0c-df34-c261-71c4-ce75357e3035").subscribe(
+    this.sub = this.projectService.get("37489e0c-df34-c261-71c4-ce75357e3035").subscribe(
       projects => {
         this.projects = projects;
         this.cd.markForCheck();
       }
     );
   }
-
   ngOnInit(): void {
-
   }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
 
   openNewProjectDialog() {
     const selectedImg = `/assets/images/covers/${Math.floor(Math.random() * 40)}_tn.jpg`
