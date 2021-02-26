@@ -94,11 +94,16 @@ export class ProjectListComponent implements OnInit {
         content: '您确定想删除该项目吗？'
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.projects = this.projects.filter(p => p.id != project.id);
-      this.cd.markForCheck();
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1),
+        filter(n => n),
+        switchMap(_ => this.projectService.delete(project))
+      ).subscribe(prj => {
+        console.log(prj);
+        this.projects = this.projects.filter(p => p.id != prj.id);
+        this.cd.markForCheck();
+      });
   }
 
 }
