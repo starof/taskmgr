@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { count, map, mapTo, mergeMap, reduce, switchMap, filter } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
-import { userInfo } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +67,7 @@ export class UserService {
     return from(memberIds).pipe(
       switchMap(id => { //根据userId取得user信息
         const uri = `${this.config.uri}/${this.domain}/${id}`;
-        return this.httpClient.get(uri);
+        return this.httpClient.get(uri) as Observable<User>;
       }),
       filter(
         (user: User) => //把项目加到user中

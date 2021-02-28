@@ -25,6 +25,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { AgeInputComponent } from './age-input/age-input.component';
 import { ChipsListComponent } from './chips-list/chips-list.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 const modules = [
   CommonModule,
@@ -49,11 +50,12 @@ const modules = [
   DirectiveModule,
   FormsModule,
   ReactiveFormsModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatChipsModule
 ];
 @NgModule({
   declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent],
   imports: modules,
-  exports: [...modules, ImageListSelectComponent, AgeInputComponent]
+  exports: [...modules, ImageListSelectComponent, AgeInputComponent, ChipsListComponent]
 })
 export class SharedModule { }
