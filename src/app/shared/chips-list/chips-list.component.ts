@@ -3,7 +3,8 @@ import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/oper
 import { Observable } from 'rxjs';
 import { User } from './../../domain/user.model';
 import { FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ControlValueAccessor, Form, FormBuilder, FormControl } from '@angular/forms';
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-chips-list',
@@ -23,6 +24,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
   ]
 })
 export class ChipsListComponent implements OnInit, ControlValueAccessor {
+  // @ViewChild('autoMember', { static: true }) autoMember: MatAutocomplete;
   @Input() multiple = true;
   @Input() placeholderText = "请输入成员 email";
   @Input() label = "添加/修改成员";
@@ -38,6 +40,9 @@ export class ChipsListComponent implements OnInit, ControlValueAccessor {
     })
   }
 
+  // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
+  // 由框架注册，然后我们使用它把变化发回表单
+  // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
   private propagateChange = (_: any) => { };
 
   ngOnInit(): void {
@@ -51,24 +56,29 @@ export class ChipsListComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: User[]): void {
-    if (this.multiple) {
+    if (obj && this.multiple) {
       //把数组转成字典
-      const userEntities: { [key: string]: User } = obj.reduce((e, c) => ({ ...e, [c.id]: c }), {})
+      const userEntities: { [key: string]: User } = obj.reduce((e, c) => ({ ...e, [<string>c.id]: c }), {})
       if (this.items) {
-        const remaining = this.items.filter(item => !userEntities[item.id]);
+        const remaining = this.items.filter(item => !userEntities[<string>item.id]);
         this.items = [...remaining, ...obj];
       }
-    } else {
+    } else if (obj && !this.multiple) {
       this.items = [...obj];
     }
   }
-  registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
-  }
-  registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+
+  // 当表单控件值改变时，函数 fn 会被调用
+  // 这也是我们把变化 emit 回表单的机制
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
   }
 
+  registerOnTouched(fn: any): void {
+
+  }
+
+  // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): { [key: string]: any } | null {
     return this.items ? null : {
       chipListInvalid: {
