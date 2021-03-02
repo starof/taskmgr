@@ -1,5 +1,5 @@
 import { UserService } from './../../services/user.service';
-import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, filter, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { User } from './../../domain/user.model';
 import { FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ControlValueAccessor, Form, FormBuilder, FormControl } from '@angular/forms';
@@ -28,16 +28,13 @@ export class ChipsListComponent implements OnInit, ControlValueAccessor {
   @Input() multiple = true;
   @Input() placeholderText = "请输入成员 email";
   @Input() label = "添加/修改成员";
-  form: FormGroup;
+  form: any;
   items: User[] = [];
   members: User[] = [];
-  memberResults$: Observable<User[]> | undefined;
+  memberResults$?: Observable<User[]>;
 
   constructor(private fb: FormBuilder, private userService: UserService) {
-    this.form = this.fb.group({
-      memberSearch: [''],
 
-    })
   }
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
@@ -46,13 +43,30 @@ export class ChipsListComponent implements OnInit, ControlValueAccessor {
   private propagateChange = (_: any) => { };
 
   ngOnInit(): void {
-    this.memberResults$ = this.form.get('memberSearch')?.valueChanges //输入流
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        filter(s => s && s.length > 1),
-        switchMap(str => this.userService.searchUsers(str)));
+    this.form = this.fb.group({
+      memberSearch: [''],
 
+    })
+    this.memberResults$ = this.searchUsers(
+      this.form.controls['memberSearch'].valueChanges
+    );
+    // this.memberResults$ = this.form.get('memberSearch')?.valueChanges //输入流
+    //   .pipe(
+    //     debounceTime(300),
+    //     distinctUntilChanged(),
+    //     filter(s => s && s.length > 1),
+    //     switchMap(str => this.userService.searchUsers(str)));
+
+  }
+
+  searchUsers(obs: Observable<string>): Observable<User[]> {
+    return obs.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      filter((s: string) => (s !== null || s !== undefined) && s.length > 1),
+      switchMap(str => this.userService.searchUsers(str))
+    );
   }
 
   writeValue(obj: User[]): void {
