@@ -26,6 +26,8 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
 import { AgeInputComponent } from './age-input/age-input.component';
 import { ChipsListComponent } from './chips-list/chips-list.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { IdentityInputComponent } from './identity-input/identity-input.component';
+import { AreaListComponent } from './area-list/area-list.component';
 
 const modules = [
   CommonModule,
@@ -54,7 +56,7 @@ const modules = [
   MatChipsModule
 ];
 @NgModule({
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent, IdentityInputComponent, AreaListComponent],
   imports: modules,
   exports: [...modules, ImageListSelectComponent, AgeInputComponent, ChipsListComponent]
 })
