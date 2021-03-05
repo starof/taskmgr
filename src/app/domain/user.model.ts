@@ -2,7 +2,7 @@ export enum IdentityType {
   IdCard = 0,
   Insurance,
   Passport,
-  Militory,
+  Military,
   Other
 }
 export interface Address {
