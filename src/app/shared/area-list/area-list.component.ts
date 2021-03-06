@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-area-list',
@@ -20,6 +22,20 @@ import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } f
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  _address: Address = {
+    province: '',
+    city: '',
+    district: '',
+    street: ''
+  };
+  _province = new Subject<string>();
+  _city = new Subject<string>();
+  _district = new Subject<string>();
+  _street = new Subject<string>();
+  cities$: Observable<string[]>;
+  districts$: Observable<string[]>;
+  provinces = getProvinces();
+  private _sub: Subscription;
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
   // 由框架注册，然后我们使用它把变化发回表单
@@ -30,6 +46,30 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
 
 
   ngOnInit(): void {
+    const province$ = this._province.asObservable().pipe(startWith(''));
+    const city$ = this._city.asObservable().pipe(startWith(''));
+    const district$ = this._district.asObservable().pipe(startWith(''));
+    const street$ = this._street.asObservable().pipe(startWith(''));
+    const val$ = combineLatest([province$, city$, district$, street$]).pipe(
+      map(([_p, _c, _d, _s]) => ({
+        province: _p,
+        city: _c,
+        district: _d,
+        street: _s
+      }))
+    );
+    this._sub = val$.subscribe(v => {
+      this.propagateChange(v);
+    });
+
+    // 根据省份的选择得到城市列表
+    this.cities$ = province$.pipe(
+      map(province => getCitiesByProvince(province))
+    );
+    // 根据省份和城市的选择得到地区列表
+    this.districts$ = combineLatest(province$, city$).pipe(
+      map(([p, c]) => getAreasByCity(p, c))
+    );
   }
 
   writeValue(obj: any): void {
@@ -48,15 +88,41 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): { [key: string]: any } | null {
     const val = c.value;
-    return val ? null : {
-      chipListInvalid: {
-        valid: false
-      }
+    if (!val) {
+      return null;
     }
+    if (
+      val.province &&
+      val.city &&
+      val.district &&
+      val.street &&
+      val.street.length >= 4
+    ) {
+      return null;
+    }
+    return {
+      addressNotValid: true
+    };
   }
 
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
+  }
+
+  onProvinceChange() {
+    this._province.next(this._address.province);
+  }
+
+  onCityChange() {
+    this._city.next(this._address.city);
+  }
+
+  onDistrictChange() {
+    this._district.next(this._address.district);
+  }
+
+  onStreetChange() {
+    this._street.next(this._address.street);
   }
 }
 
