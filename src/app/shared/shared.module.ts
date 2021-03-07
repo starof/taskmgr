@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material/tabs';
 import { DirectiveModule } from './../directive/directive.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -53,7 +54,8 @@ const modules = [
   FormsModule,
   ReactiveFormsModule,
   MatButtonToggleModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTabsModule
 ];
 @NgModule({
   declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent, IdentityInputComponent, AreaListComponent],
