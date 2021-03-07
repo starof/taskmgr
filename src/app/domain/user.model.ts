@@ -6,7 +6,7 @@ export enum IdentityType {
   Other
 }
 export interface Address {
-  provice: string,
+  province: string,
   city: string,
   district: string,
   street?: string

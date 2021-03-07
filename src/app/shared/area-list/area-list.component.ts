@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, forwardRef, OnDestroy, OnInit } fro
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { Address } from 'src/app/domain/user.model';
+import { getAreasByCity, getCitiesByProvince, getProvinces } from 'src/app/utils/area.util';
 
 @Component({
   selector: 'app-area-list',
@@ -42,10 +44,7 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
   private propagateChange = (_: any) => { };
 
-  constructor() { }
-
-
-  ngOnInit(): void {
+  constructor() {
     const province$ = this._province.asObservable().pipe(startWith(''));
     const city$ = this._city.asObservable().pipe(startWith(''));
     const district$ = this._district.asObservable().pipe(startWith(''));
@@ -72,8 +71,27 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
     );
   }
 
-  writeValue(obj: any): void {
 
+  ngOnInit(): void {
+
+  }
+
+  writeValue(obj: any): void {
+    if (obj) {
+      this._address = obj;
+      if (this._address.province) {
+        this._province.next(this._address.province);
+      }
+      if (this._address.city) {
+        this._city.next(this._address.city);
+      }
+      if (this._address.district) {
+        this._district.next(this._address.district);
+      }
+      if (this._address.street) {
+        this._street.next(this._address.street);
+      }
+    }
   }
 
   // 当表单控件值改变时，函数 fn 会被调用
@@ -124,8 +142,4 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   onStreetChange() {
     this._street.next(this._address.street);
   }
-}
-
-
-
 }
