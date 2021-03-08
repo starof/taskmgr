@@ -5,5 +5,7 @@ export const isValidDate = (dateStr: string) => {
 };
 
 export const convertToDate = (date: Date) => {
-  return format(date, 'yyyy-MM-dd');
+  const birthday = format(date, 'yyyy-MM-dd');
+  console.log(birthday);
+  return birthday;
 };

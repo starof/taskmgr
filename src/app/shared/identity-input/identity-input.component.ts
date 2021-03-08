@@ -152,8 +152,8 @@ export class IdentityInputComponent implements OnInit, OnDestroy, ControlValueAc
 
   onIdNoChange(event: Event) {
     console.log(event);
-    // const idNo = event.target.value;
-    // this._idNo.next(idNo);
+    const idNo = (<HTMLInputElement>event.target).value;
+    this._idNo.next(idNo);
   }
 
   private get idType(): Observable<IdentityType> {

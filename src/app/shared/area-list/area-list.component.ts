@@ -66,7 +66,7 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
       map(province => getCitiesByProvince(province))
     );
     // 根据省份和城市的选择得到地区列表
-    this.districts$ = combineLatest(province$, city$).pipe(
+    this.districts$ = combineLatest([province$, city$]).pipe(
       map(([p, c]) => getAreasByCity(p, c))
     );
   }
