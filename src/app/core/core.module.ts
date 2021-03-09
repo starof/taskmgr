@@ -1,3 +1,4 @@
+import { AppStoreModule } from './../reucers/index';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './../shared/shared.module';
@@ -19,7 +20,8 @@ import { ServicesModule } from '../services/services.module';
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
-    ServicesModule.forRoot()
+    ServicesModule.forRoot(),
+    AppStoreModule
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent
