@@ -5,6 +5,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import * as fromQuote from './quote.reducer';
 import { storeFreeze } from 'ngrx-store-freeze';
+import { createSelector } from 'reselect'
+
 import { environment } from 'src/environments/environment';
 
 //全局state
@@ -29,6 +31,11 @@ export function reducer(state = initialState, action: any): State {
 }
 
 
+
+export const getQuoteState = (state: State) => state.quote
+
+export const getQuote: any = createSelector(getQuoteState, fromQuote.getQuote)
+
 @NgModule({
     imports: [
         StoreModule.forRoot({
@@ -37,7 +44,7 @@ export function reducer(state = initialState, action: any): State {
         StoreModule.forRoot(reducer),
         StoreRouterConnectingModule.forRoot(),
         // StoreDevtoolsModule.instrumentOnlyWithExtension(),
-        StoreDevtoolsModule.instrument() //给devtools提供钩子
+        StoreDevtoolsModule.instrument({maxAge:25,logOnly:environment.production}) //给devtools提供钩子
     ]
 })
 export class AppStoreModule { }

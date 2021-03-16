@@ -1,7 +1,12 @@
+import { State } from '../../reducers/index';
+import { Observable } from 'rxjs';
 import { Quote } from './../../domain/quote.model';
 import { QuoteService } from './../../services/quote.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../reducers'
+import * as actions from '../../actions/quote.actions'
 
 @Component({
   selector: 'app-login',
@@ -10,24 +15,24 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  quote: Quote = { cn: '满足感在于不断的努力，而不是现有成就。全心努力定会胜利满满。', pic: '/assets/images/quote_fallback.jpg', en: 'Satisfaction lies in the effort, not in the attainment. Full effort is full victory.' };
-  constructor(private fb: FormBuilder, private quoteService$: QuoteService) {
-    // this.form = new FormGroup({
-    //   email: new FormControl("wang@163.com", Validators.compose([Validators.required, Validators.email])),
-    //   password: new FormControl("",Validators.required),
-    // })
-
-    //formBuilder不需要显示的new FormControl
+  quote$: Observable<Quote>;
+  constructor(private fb: FormBuilder,
+    private quoteService$: QuoteService,
+    private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
       email: ["wang@163.com", Validators.compose([Validators.required, Validators.email, this.validate])],
       password: ["", Validators.required]
 
     });
-    this.quoteService$.getQuote().subscribe(quote => this.quote = quote)
+    //用Store的select()方法获取可观察对象，然后订阅观察，在状态变化之后做出反应。
+    this.quote$ = this.store$.select(fromRoot.getQuote);
+   
   }
 
   ngOnInit(): void {
-
+    this.quoteService$.getQuote().subscribe(quote => {
+      this.store$.dispatch({ type: actions.QUOTE_SUCCESS, payload: quote })
+    })
   }
 
   onSubmit(form: FormGroup, event: Event) {
