@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteService$.getQuote().subscribe(quote => {
-      this.store$.dispatch({ type: actions.QUOTE_SUCCESS, payload: quote })
+      this.store$.dispatch({ type: actions.LOAD_SUCCESS, payload: quote })
     })
   }
 

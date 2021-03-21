@@ -1,25 +1,27 @@
+import { Quote } from './../domain/quote.model';
 import { Action } from "@ngrx/store";
 
 //定义几个action常量
-export const QUOTE = 'QUOTE';
-export const QUOTE_SUCCESS = 'QUOTE_SUCCESS';
-export const QUOTE_FAIL = 'QUOTE_FAIL';
+export const LOAD = 'LOAD';
+export const LOAD_SUCCESS = 'LOAD_SUCCESS';
+export const LOAD_FAIL = 'LOAD_FAIL';
 
 
-export class Quote implements Action {
-    readonly type: string = QUOTE;
+export class Load implements Action {
+    readonly type: string = LOAD;
+    payload: any;
+
+
+}
+
+export class LoadFail implements Action {
+    readonly type: string = LOAD_FAIL;
+
+}
+export class LoadSuccess implements Action {
+    readonly type: string = LOAD_SUCCESS;
     payload: any;
 
 }
 
-export class QuoteFail implements Action {
-    readonly type: string = QUOTE_FAIL;
-
-}
-export class QuoteSuccess implements Action {
-    readonly type: string = QUOTE_SUCCESS;
-    payload: any;
-
-}
-
-export type QuoteAction = Quote | QuoteSuccess | QuoteFail;
+export type QuoteAction = Load | LoadSuccess | LoadFail;

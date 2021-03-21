@@ -14,12 +14,12 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: quoteAction.QuoteAction): State {
     switch (action.type) {
-        case quoteAction.QUOTE_SUCCESS: {
+        case quoteAction.LOAD_SUCCESS: {
             return {
-                ...state, quote: (action as quoteAction.QuoteSuccess).payload
+                ...state, quote: (action as quoteAction.LoadSuccess).payload
             };
         }
-        case quoteAction.QUOTE_FAIL:
+        case quoteAction.LOAD_FAIL:
         default: {
             return state;
         }
