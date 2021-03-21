@@ -26,4 +26,5 @@ export function reducer(state = initialState, action: quoteAction.QuoteAction): 
     }
 }
 
+//写一个selector,接受state参数，返回state里面的quote
 export const getQuote = (state: State) => state.quote
