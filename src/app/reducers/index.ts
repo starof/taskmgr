@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 
 //全局state
 export interface State {
-    quote: fromQuote.State
+    quote: fromQuote.State //分支的state
 };
 
 const initialState: State = {
@@ -38,13 +38,13 @@ export const getQuote: any = createSelector(getQuoteState, fromQuote.getQuote)
 
 @NgModule({
     imports: [
-        StoreModule.forRoot({
-            router: routerReducer,
-        }),
-        StoreModule.forRoot(reducer),
+        // StoreModule.forRoot({
+        //     router: routerReducer,
+        // }),
+        StoreModule.forRoot({ quote: fromQuote.reducer }), //全局reducer
         StoreRouterConnectingModule.forRoot(),
         // StoreDevtoolsModule.instrumentOnlyWithExtension(),
-        StoreDevtoolsModule.instrument({maxAge:25,logOnly:environment.production}) //给devtools提供钩子
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }) //给devtools提供钩子
     ]
 })
 export class AppStoreModule { }

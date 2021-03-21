@@ -25,8 +25,10 @@ export class LoginComponent implements OnInit {
 
     });
     //用Store的select()方法获取可观察对象，然后订阅观察，在状态变化之后做出反应。
-    this.quote$ = this.store$.select(fromRoot.getQuote);
-   
+    // this.quote$ = this.store$.select(fromRoot.getQuote);
+    this.quote$ = this.store$.select(state => {
+      return state.quote.quote;});
+
   }
 
   ngOnInit(): void {

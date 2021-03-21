@@ -1,5 +1,7 @@
 import { Quote } from '../domain/quote.model';
 import * as quoteAction from '../actions/quote.actions';
+import { Action } from '@ngrx/store';
+
 
 export interface State {
     quote: Quote
@@ -10,11 +12,11 @@ export const initialState: State = {
 };
 
 
-export function reducer(state = initialState, action: { type: string, payload: any }): State {
+export function reducer(state = initialState, action: quoteAction.QuoteAction): State {
     switch (action.type) {
         case quoteAction.QUOTE_SUCCESS: {
             return {
-                ...state, quote: action.payload
+                ...state, quote: (action as quoteAction.QuoteSuccess).payload
             };
         }
         case quoteAction.QUOTE_FAIL:
