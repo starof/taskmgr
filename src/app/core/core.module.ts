@@ -1,3 +1,4 @@
+import { AppEffectsModule } from './../effects/index';
 import { AppStoreModule } from '../reducers/index';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +22,8 @@ import { ServicesModule } from '../services/services.module';
     RouterModule,
     HttpClientModule,
     ServicesModule.forRoot(),
-    AppStoreModule
+    AppStoreModule,
+    AppEffectsModule
   ],
   exports: [
     HeaderComponent, FooterComponent, SidebarComponent

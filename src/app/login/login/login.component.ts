@@ -1,3 +1,4 @@
+import { LOAD } from './../../actions/quote.actions';
 import { Observable } from 'rxjs';
 import { Quote } from './../../domain/quote.model';
 import { QuoteService } from './../../services/quote.service';
@@ -16,7 +17,6 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   quote$: Observable<Quote>;
   constructor(private fb: FormBuilder,
-    private quoteService$: QuoteService,
     private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
       email: ["wang@163.com", Validators.compose([Validators.required, Validators.email, this.validate])],
@@ -26,13 +26,10 @@ export class LoginComponent implements OnInit {
     //用Store的select()方法获取可观察对象，然后订阅观察，在状态变化之后做出反应。
     // this.quote$ = this.store$.select(fromRoot.getQuote);
     this.quote$ = this.store$.select(fromRoot.getQuote);
-
+    this.store$.dispatch({ type: actions.LOAD })
   }
 
   ngOnInit(): void {
-    this.quoteService$.getQuote().subscribe(quote => {
-      this.store$.dispatch({ type: actions.LOAD_SUCCESS, payload: quote })
-    })
   }
 
   onSubmit(form: FormGroup, event: Event) {

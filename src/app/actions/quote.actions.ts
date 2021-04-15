@@ -21,6 +21,7 @@ export class LoadFail implements Action {
 export class LoadSuccess implements Action {
     readonly type: string = LOAD_SUCCESS;
     payload: any;
+    constructor(payload: any) { this.payload = payload }
 
 }
 
